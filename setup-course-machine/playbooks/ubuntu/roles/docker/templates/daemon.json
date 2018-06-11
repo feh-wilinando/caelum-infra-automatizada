@@ -1,0 +1,4 @@
+{
+    "insecure-registries": ["{{ local_registry_url }}"],
+    "registry-mirrors": ["{{ local_registry_url }}"]
+}

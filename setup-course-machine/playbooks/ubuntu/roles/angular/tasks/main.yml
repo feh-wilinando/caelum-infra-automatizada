@@ -1,0 +1,7 @@
+---
+- name: 'Install Angular-CLI'
+  npm:
+    name: "angular/cli"
+    global: yes
+    state: present
+  become: yes

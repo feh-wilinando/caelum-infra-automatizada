@@ -1,0 +1,19 @@
+---
+- name: 'Add VS Code GPG'
+  apt_key:
+    url: "{{ vscode_gpg_key_url }}"
+    state: present
+  become: yes
+
+- name: 'Add VS Code repository'
+  apt_repository: 
+    repo: "{{ vscode_repository }}"
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: 'Install VS Code'
+  apt:
+    name: 'code'
+    state: present
+  become: yes

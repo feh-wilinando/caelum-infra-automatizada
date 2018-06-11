@@ -1,0 +1,7 @@
+{
+    "auths": {
+        "{{ local_registry_ip }}": {
+                "auth": "{{ user_password_base64 }}"
+        }
+    }
+}

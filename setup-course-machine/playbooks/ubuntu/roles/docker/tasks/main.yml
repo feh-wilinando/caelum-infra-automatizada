@@ -1,0 +1,6 @@
+---
+- name: 'Tasks to install docker'
+  include_tasks: 'install/main.yml'
+
+- name: 'Task to pull images' 
+  include_tasks: 'pull-images/main.yml'

@@ -1,0 +1,9 @@
+---
+- name: 'Pull images'
+  docker_image:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - "{{ local_registry_ip }}/nginx:alpine"
+    - "{{ local_registry_ip }}/mysql"

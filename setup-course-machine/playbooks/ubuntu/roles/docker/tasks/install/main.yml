@@ -1,0 +1,61 @@
+---
+- name: 'Install docker dependencies'
+  apt:
+    name: "{{ item }}"
+    state: latest
+    install_recommends: no
+  become: yes 
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - software-properties-common
+    - python3-pip
+
+- name: 'Install docker dependencies for ansible'  
+  pip:
+    name: docker-py 
+    state: present
+  become: yes
+
+- name: 'Added Docker official gpg'
+  apt_key:
+    url: "{{ docker_gpg_key_url }}"
+    state: present
+  become: yes
+
+- name: 'Added Docker repository'
+  apt_repository:
+    repo: "{{ docker_repository }}"
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: 'Install Docker CE'
+  apt:
+    name: 'docker-ce'
+    state: present
+  become: yes
+
+- name: 'Create docker group'
+  group: 
+    name: docker
+    state: present
+  become: yes
+
+- name: 'Added configuration files'
+  template:
+    src: "{{ item.template }}"
+    dest: "{{ item.dest }}"
+  become: yes
+  with_items:
+    - { template: "/template/daemon.json", dest: "/etc/docker/daemon.json" }
+    - { template: "/template/config.json", dest: "/etc/skel/.docker/config.json" }
+  notify: 'restart docker'
+
+- name: 'Install docker-copmose'
+  get_url:
+    url: "{{ docker_compose_url }}"
+    dest: /usr/local/bin/docker-compose 
+    mode: u+x,g+x,o+x
+  become: yes
+    

@@ -1,0 +1,9 @@
+---
+- name: 'Install NodeJS'
+  apt:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  with_items:
+    - node
+    - npm

@@ -1,0 +1,34 @@
+---
+- name: 'Removing previous eclipse if exists'
+  file:
+    path: "{{ item }}"
+    force: yes
+    follow: yes
+    state: absent
+  become: yes
+  with_items:
+    - /opt/eclipse/
+    - /usr/share/applications/eclipse.desktop
+    
+- name: 'Unarchive eclipse'
+  unarchive:
+    src: files/eclipse.tar.gz
+    dest: /opt
+  become: yes
+
+- name: 'Create Skel Desktop directory'
+  file:
+    path: /etc/skel/Desktop
+    state: directory
+  become: yes  
+  
+- name: 'Copy eclipse files from host'
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  become: yes
+  with_items:
+    - { src: files/eclipse.png, dest: /opt/eclipse, mode: "u=rwx,g=rw,o=rw" }
+    - { src: files/eclipse.desktop, dest: /usr/share/applications/, mode: "u=rwx,g=rx,o=rx" }
+    - { src: files/eclipse.desktop, dest: /etc/skel/Desktop, mode: "u=rwx,g=rx,o=rx" }

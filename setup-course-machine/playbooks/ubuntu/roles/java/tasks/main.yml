@@ -1,0 +1,13 @@
+--- 
+- name: 'Added OpenJDK repository'
+  apt_repository:
+    repo: ppa:openjdk-r/ppa
+    state: present
+    update_cache: yes
+  become: yes 
+
+- name: 'Install Java 8'
+  apt: 
+    name: openjdk-8-jdk
+    state: latest
+  become: yes

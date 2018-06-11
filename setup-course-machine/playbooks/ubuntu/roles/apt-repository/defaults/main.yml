@@ -1,0 +1,2 @@
+---
+mirror_repository_url: "deb http://192.168.33.1:8081/repository/apt-proxy/ trusty main"

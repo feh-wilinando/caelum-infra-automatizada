@@ -1,0 +1,8 @@
+---
+- name: 'Added Mirror APT repository'
+  apt_repository:
+    repo: "{{ mirror_repository_url }}"
+    state: present
+    validate_certs: false
+    update_cache: yes
+  become: yes
